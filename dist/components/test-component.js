@@ -1,25 +1,40 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NavController } from 'ionic-angular';
-var HTML_TEMPLATE = "\n<ion-header>\n  <ion-navbar color=\"primary\">\n    <ion-title>\n      Ionic Academy\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n \n<ion-content padding>\n \n<div class=\"special-text\">Welcome to the special Ionic Academy Module!</div>\n  <button ion-button full icon-left (click)=\"leavePage()\">\n    <ion-icon name=\"close\"></ion-icon>\n  Close the Page</button>\n</ion-content>\n";
-var CSS_STYLE = "\n.special-text {\n    font-weight: 800;\n    font-size: 15pt;\n    text-align: center;\n    color: #0000FF;\n}\n";
+import { TestProvider } from '../providers/test-provider';
+var HTML_TEMPLATE = "\n  <button> {{pay_text}} </button>\n";
+// const CSS_STYLE = `
+// .special-text {
+//     font-weight: 800;
+//     font-size: 15pt;
+//     text-align: center;
+//     color: #0000FF;
+// }
+// `;
 var TestComponent = (function () {
-    function TestComponent(navCtrl) {
+    function TestComponent(navCtrl, testProvider) {
         this.navCtrl = navCtrl;
+        this.testProvider = testProvider;
     }
     TestComponent.prototype.leavePage = function () {
         this.navCtrl.pop();
+    };
+    TestComponent.prototype.raveDropinUi = function () {
     };
     TestComponent.decorators = [
         { type: Component, args: [{
                     selector: 'test-component',
                     template: HTML_TEMPLATE,
-                    styles: [CSS_STYLE]
+                    styles: []
                 },] },
     ];
     /** @nocollapse */
     TestComponent.ctorParameters = function () { return [
         { type: NavController, },
+        { type: TestProvider, },
     ]; };
+    TestComponent.propDecorators = {
+        "pay_text": [{ type: Input },],
+    };
     return TestComponent;
 }());
 export { TestComponent };

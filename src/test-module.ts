@@ -18,9 +18,6 @@ import { IonicModule } from 'ionic-angular';
     ]
 })
 export class TestModule {
-    constructor() {
-        
-    }
     static forRoot(): ModuleWithProviders {
         return {
             ngModule: TestModule,
