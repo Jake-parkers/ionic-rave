@@ -101,10 +101,12 @@ Sample ```setup``` error response
 
 Sample
 
+```
 pay() {
     if(this.info["valid"] == true) getpaidSetup(this.info["payload"])
     else console.log(this.info["error"])
 }
+```
 
 
 ## Deployment
