@@ -1,4 +1,4 @@
-export let schema = {
+export const schema = {
     PBFPubKey: {
       required: "true",
       type: "string",
@@ -6,7 +6,7 @@ export let schema = {
         return data === "" || data == null || data == undefined
       }
     },
-    txRef: {
+    txref: {
       required: "true",
       type: "string",
       isEmpty: (data) => {

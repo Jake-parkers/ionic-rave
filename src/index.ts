@@ -1,3 +1,3 @@
-export * from './test-module';
-export * from './components/test-component';
-export * from './providers/test-provider';
+export * from './rave-module';
+export * from './components/rave-component';
+export * from './providers/rave-provider';

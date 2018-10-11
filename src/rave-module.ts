@@ -1,6 +1,6 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
-import { TestComponent } from './components/test-component';
-import { TestProvider } from './providers/test-provider';
+import { RaveComponent } from './components/rave-component';
+import { RaveProvider } from './providers/rave-provider';
 import { IonicModule } from 'ionic-angular';
  
 @NgModule({
@@ -10,18 +10,18 @@ import { IonicModule } from 'ionic-angular';
     ],
     declarations: [
         // declare all components that your module uses
-        TestComponent
+        RaveComponent
     ],
     exports: [
         // export the component(s) that you want others to be able to use
-        TestComponent
+        RaveComponent
     ]
 })
-export class TestModule {
+export class RaveModule {
     static forRoot(): ModuleWithProviders {
         return {
-            ngModule: TestModule,
-            providers: [TestProvider]
+            ngModule: RaveModule,
+            providers: [RaveProvider]
         };
     }
 }

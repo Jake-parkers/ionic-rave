@@ -1,1 +1,1 @@
-[{"__symbolic":"module","version":4,"metadata":{},"exports":[{"from":"./test-module"},{"from":"./components/test-component"},{"from":"./providers/test-provider"}]}]
+[{"__symbolic":"module","version":4,"metadata":{},"exports":[{"from":"./rave-module"},{"from":"./components/rave-component"},{"from":"./providers/rave-provider"}]}]

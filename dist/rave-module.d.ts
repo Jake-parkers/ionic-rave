@@ -1,4 +1,4 @@
 import { ModuleWithProviders } from '@angular/core';
-export declare class TestModule {
+export declare class RaveModule {
     static forRoot(): ModuleWithProviders;
 }

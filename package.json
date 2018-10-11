@@ -1,7 +1,7 @@
 {
-  "name": "test-package-jakey",
+  "name": "ionic-rave",
   "version": "0.0.1",
-  "description": "A Simple Ionic Academy Module",
+  "description": "An ionic module to help you integrate rave inline payment modal",
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
   "files": [
@@ -14,12 +14,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/saimon24/ionic-academy-module.git"
+    "url": ""
   },
   "keywords": [],
-  "author": "Simon Grimm",
+  "author": "Flutterwave",
   "license": "MIT",
-  "homepage": "https://ionicacademy.com",
+  "homepage": "https://rave.flutterwave.com",
   "devDependencies": {
     "@angular/common": "5.0.3",
     "@angular/compiler": "5.0.3",
