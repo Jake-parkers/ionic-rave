@@ -34,7 +34,7 @@ export class Rave {
     preRender(paymentObject:RavePayment) {
         return new Promise((resolve, reject) => {
             paymentObject['PBFPubKey'] = this.misc.PBFPubKey;
-            return this.http.post('https://ravesandboxapi.flutterwave.com/flwv3-pug/getpaidx/api/v2/hosted/', paymentObject, {headers: {'content-type': 'application/json'}})
+            return this.http.post('https://ravesandboxapi.flutterwave.com/flwv3-pug/getpaidx/api/v2/hosted/pay', paymentObject, {headers: {'content-type': 'application/json'}})
                 .subscribe(response => {
                     if(response["status"] == "error") reject(response["message"])
                     else resolve(response["data"]["link"])
