@@ -1,3 +1,4 @@
 export * from './rave-module';
-export * from './components/rave-component';
+export * from './providers/rave-payment-provider';
 export * from './providers/rave-provider';
+export * from './providers/misc-provider';

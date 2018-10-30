@@ -1,26 +1,25 @@
-export declare class RaveProvider {
+import { Misc } from './misc-provider';
+import { RavePayment } from './rave-payment-provider';
+import { HttpClient } from '@angular/common/http';
+export declare class Rave {
+    misc: Misc;
+    private http;
     uri: string;
-    sandbox: string;
-    live: string;
-    constructor();
+    constructor(misc: Misc, http: HttpClient);
     /**
-     * This function loads the rave inline js unto the current window.
-     * It also validates the payment object the programmer passes in
-     * @param production - a boolean that determines if the uri will be set to live or sandbox
-     * @param payload -  this is the payment object passed in by the programmer
+     *
+     * @param production
+     * @param public_key
      */
-    setup(production: boolean, payload: any): {
-        valid: boolean;
-        payload: any;
-    } | {
-        valid: boolean;
-        error: any[];
-    } | {
-        valid: boolean;
-        error: string;
-    };
+    init(production: boolean, public_key: any): Promise<{}>;
     /**
-     * This function appends rave inline js to the body tag
+     * Returns a payment link that can be used to spin up the modal
+     * @param paymentObject
      */
-    loadRaveInline(): void;
+    preRender(paymentObject: RavePayment): Promise<{}>;
+    /**
+     * Spins up the modal
+     * @param paymentLink
+     */
+    render(paymentLink: any): void;
 }

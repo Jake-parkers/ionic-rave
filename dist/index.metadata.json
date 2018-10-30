@@ -1,1 +1,1 @@
-[{"__symbolic":"module","version":4,"metadata":{},"exports":[{"from":"./rave-module"},{"from":"./components/rave-component"},{"from":"./providers/rave-provider"}]}]
+[{"__symbolic":"module","version":4,"metadata":{},"exports":[{"from":"./rave-module"},{"from":"./providers/rave-payment-provider"},{"from":"./providers/rave-provider"},{"from":"./providers/misc-provider"}]}]
