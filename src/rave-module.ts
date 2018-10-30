@@ -1,11 +1,16 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { RaveComponent } from './components/rave-component';
-import { RaveProvider } from './providers/rave-provider';
+import { Rave } from './providers/rave-provider';
+import { RavePayment } from './providers/rave-payment-provider';
+import { Misc } from './providers/misc-provider';
+
 import { IonicModule } from 'ionic-angular';
+import { HttpClientModule } from '@angular/common/http';
  
 @NgModule({
     imports: [
         // Only if you use elements like ion-content, ion-xyz...
+        HttpClientModule,
         IonicModule
     ],
     declarations: [
@@ -21,7 +26,7 @@ export class RaveModule {
     static forRoot(): ModuleWithProviders {
         return {
             ngModule: RaveModule,
-            providers: [RaveProvider]
+            providers: [Rave, RavePayment, Misc]
         };
     }
 }

@@ -1,45 +1,54 @@
 import { Injectable } from '@angular/core';
-import * as Validator from '../helper/validate';
-const validate = Validator.validate;
-(window as any).getpaidSetup
-window["getpaidSetup"] = () => {}
-var getpaidSetup: Function
+import { Misc } from './misc-provider';
+import { RavePayment } from './rave-payment-provider';
+
+import { HttpClient } from '@angular/common/http';
+
+require('cordova-plugin-inappbrowser');
+
 @Injectable()
-export class RaveProvider {
+export class Rave {
     uri: string;
-    sandbox: string = 'https://ravesandboxapi.flutterwave.com/flwv3-pug/getpaidx/api/flwpbf-inline.js';
-    live: string = 'https://api.ravepay.co/flwv3-pug/getpaidx/api/flwpbf-inline.js';
-    constructor() {
+    constructor(public misc: Misc, private http: HttpClient) {
     }
 
     /**
-     * This function loads the rave inline js unto the current window.
-     * It also validates the payment object the programmer passes in
-     * @param production - a boolean that determines if the uri will be set to live or sandbox
-     * @param payload -  this is the payment object passed in by the programmer
+     * 
+     * @param production 
+     * @param public_key 
      */
-    setup(production=false, payload) {
-        if (production) this.uri = this.live;
-        else this.uri = this.sandbox;
-
-        // load script
-        this.loadRaveInline();
-
-        // validate payload
-        if(payload) return validate(payload)
-        else return {valid: false, error: "No payment object passed in. Kindly pass one"}
-
+    init(production=false, public_key) {
+        return new Promise((resolve, reject) => {
+            if(public_key == undefined) reject("Please pass in a valid public key");
+            if (production) this.uri = this.misc.live;
+            else this.uri = this.misc.sandbox;
+            this.misc.PBFPubKey = public_key;
+            resolve(true)
+        })    
     }
 
     /**
-     * This function appends rave inline js to the body tag
+     * Returns a payment link that can be used to spin up the modal
+     * @param paymentObject 
      */
-    loadRaveInline() {
-        let body = <HTMLDivElement> document.body;
-        let script = document.createElement("script");
-        script.src = this.uri;
-        body.appendChild(script);
+    preRender(paymentObject:RavePayment) {
+        return new Promise((resolve, reject) => {
+            return this.http.post('https://ravesandboxapi.flutterwave.com/flwv3-pug/getpaidx/api/v2/hosted/', paymentObject, {headers: {'content-type': 'application/json'}})
+                .subscribe(response => {
+                    if(response["status"] == "error") reject(response["message"])
+                    else resolve(response["data"]["link"])
+                })
+        })
     }
 
+    /**
+     * Spins up the modal
+     * @param paymentLink 
+     */
+    render(paymentLink) {
+        //@ts-ignore
+        cordova.InAppBrowser.open(paymentLink, '_blank');
+    }
     
 }
+
