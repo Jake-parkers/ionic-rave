@@ -15,11 +15,9 @@ import { HttpClientModule } from '@angular/common/http';
     ],
     declarations: [
         // declare all components that your module uses
-        RaveComponent
-    ],
+            ],
     exports: [
         // export the component(s) that you want others to be able to use
-        RaveComponent
     ]
 })
 export class RaveModule {
