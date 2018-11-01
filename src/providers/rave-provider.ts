@@ -4,12 +4,10 @@ import { RavePayment } from './rave-payment-provider';
 
 import { HttpClient } from '@angular/common/http';
 
-require('cordova-plugin-inappbrowser');
-
 @Injectable()
 export class Rave {
     uri: string;
-    constructor(public misc: Misc, private http: HttpClient) {
+    constructor(public misc: Misc, public ravePayment: RavePayment, private http: HttpClient) {
     }
 
     /**
@@ -32,13 +30,16 @@ export class Rave {
      * @param paymentObject 
      */
     preRender(paymentObject:RavePayment) {
+        paymentObject["PBFPubKey"] = this.misc.PBFPubKey;
+        var paymentObj = this.ravePayment.create(paymentObject)
         return new Promise((resolve, reject) => {
-            paymentObject['PBFPubKey'] = this.misc.PBFPubKey;
-            return this.http.post('https://ravesandboxapi.flutterwave.com/flwv3-pug/getpaidx/api/v2/hosted/pay', paymentObject, {headers: {'content-type': 'application/json'}})
-                .subscribe(response => {
-                    if(response["status"] == "error") reject(response["message"])
-                    else resolve(response["data"]["link"])
-                })
+            if(paymentObj["validated"]) { 
+                return this.http.post(this.uri, paymentObj, {headers: {'content-type': 'application/json'}})
+                    .subscribe(response => {
+                        if(response["status"] == "error") reject(response["message"])
+                        else resolve(response["data"]["link"])
+                    })
+            }else reject(paymentObj)
         })
     }
 

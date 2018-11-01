@@ -1,126 +1,105 @@
 # Ionic 3 Rave
 
- An Ionic 3 module to add [Rave](https://www.flutterwave.com) Pay Button into your ionic apps.
+ This Ionic 3 Module let's you add [Rave](https://www.flutterwave.com) Pay Button into your Cordova/Phonegap apps builds.
 
- ## Getting Started
+## Installation
+<br/>
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+The Rave Ionic 3 Module adds support for spinning up the Rave modal on IOS and Android. It uses the Rave Standard endpoint and has done all the hard work for you. All you need to is add the necessary file and call the appropriate functions.
 
-### Prerequisites
-Ensure that you have signed up for a Rave account. If not, go [here](https://www.rave.flutterwave.com) to signup for a ```live``` account or [here](https://www.ravesandbox.flutterwave.com) to signup for a ```test``` account.
-
-Ensure that you have ```nodejs``` and ```npm``` installed. If download Nodejs from [here](https://nodejs.org) and install it.
-> Installing ```nodejs``` also install ```npm``` with it.
-
-Once you have ```nodejs``` and ```npm``` installed, proceed install cordova using the command below
+1. Follow the official [Rave](https://www.flutterwave.com) documentation on how to create an account if you don't have one yet.
+2. Create a dummy project. For example ```ionic start myapp blank```
+3. Install the Module
 
 ```
-npm install -g ionic
+$ cd myapp
+$ npm install --save rave-ionic3-sdk
 ```
-**NOTE:** if you are a MAC or Linux user, you might need to append ```sudo``` before ```npm install -g ionic``` __i.e__
-```
-sudo npm install -g ionic
-```
+4. [Add the module to your AppModule](https://ionicframework.com/docs/native/#Add_Plugins_to_Your_App_Module)
+5. See Usage
 
-### Installing
 
-In your project folder, run
-
-```npm install --save ionic-rave```
-
-### Features
-
-1. ```ionic-rave``` exports a component ```<rave-component> </rave-component>``` that you can add to your html page. ```<rave-component>``` simply creates a button with whatever text you pass into ```pay_text```.
-
-Sample rave-component call
-
-```<rave-component (click)="pay()" pay_text="Pay Now"></rave-component>```
-
-2. ```ionic-rave``` exports a function ```setup``` which you **must** call in order to initiate loading the [Rave](https://developer.flutterwave.com/docs/rave-inline) payment modal.
-```setup``` takes two arguments:
-    - production: a boolean value that determines whether you want the live or sandbox environment (for testing)
-    - payload: an object containing all the necessary properties to spin up the payment modal. The properties are explained below:
-        
-        >PBFPubKey: This is your Rave public key and can be gotten from your rave dashboard - Required
-
-        >amount: The amount you want to charge your customers. If omitted, A customer will be able to specify the amount - Required
-
-        >customer_email: this is the merchant's email address - Required
-
-        >customer_phone: phone number of the customer - Required
-
-        >currency: The currency you want to charge your customers in. If omitted, it defaults to NGN 
-
-        >country: The merchant's country. Defaults to Nigeria
-
-        >custom_title: A title for your payment
-
-        >custom_description: Text describing what your customers are paying for
-        
-        >redirect_url: This is the url that rave sends the response of your transaction to. It should be configured to handle a get request. If not supplied, no response will be sent from Rave
-
-        >payment_plan_id: If you want to bill your customers recurrently, pass in the payment plan id here. It must be an integer
-
-        >payment_options: This allows you select the payment option you want for your users.
-
-        >subaccounts: This is an array of objects containing the subaccount IDs to split the payment into.
-
-        >custom_logo: Link to the Logo image.
-
-        >txref: Unique transaction reference provided - Required
-
-    > Go [here](https://developer.flutterwave.com/docs/rave-inline) for more options
-
-The ```setup``` returns an object with properties ```valid```, ```payload``` (if the payment details passed are valid), ```error``` (if any of the payment details passed is not valid ).
-
-A sample call is shown below:
+##  Usage
+<br/>
 
 ```
-this.test.setup(true, {
-      PBFPubKey: "FLWPUBK-8bf84c62ed00abccc4ce37e12638ad63-X",
-      customer_email: "user@example.com",
-      amount: 1,
-      customer_phone: "08074376980",
-      currency: "NGN",
-      payment_options: "card,account,ussd,mpesa",
-      txref: "Mx-990000TD",
-      redirect_url: "https://agile-journey-11424.herokuapp.com"
-    });
-}
+import { Rave, RavePayment } from 'rave-ionic3-sdk';
+
+constructor(private rave: Rave, private ravePayment: RavePayment) { }
+
+...
+
+
+this.rave.init(PRODUCTION_FLAG, "YOUR_PUBLIC_KEY")
+      .then(_ => {
+        var paymentObject = this.ravePayment.create({
+          customer_email: "user@example.com",
+          amount: 2000,
+          customer_phone: "234099940409",
+          currency: "NGN",
+          txref: "rave-123456",
+          meta: [{
+              metaname: "flightID",
+              metavalue: "AP1234"
+          }]
+      })
+        this.rave.preRender(paymentObject)
+          .then(secure_link => {
+            secure_link = secure_link +" ";
+            this.rave.render(secure_link);
+          }).catch(error => {
+            // Error or invalid paymentObject passed in
+          })
+      })
 
 ```
 
-Sample ```setup``` error response
+## Instance Members
 
-```
-{valid: false, error: [{'property': PBFPubkey, 'error': 'PBFPubKey is a required field and cannot be empty'}]}
-```
+### Rave
 
+**```init(PRODUCTION_FLAG, PUBLIC_KEY)```**
 
-3. Once you call the ```setup``` function, the ```getpaidSetup``` function will be available ```globally``` for you to call to show the payment modal.
+You must call the init method with the ```PRODUCTION_FLAG``` set to ```true``` or ```false``` and your ```PUBLIC KEY```. If your production flag is set to ```true```, you will need to pass in your ```live``` ```public key``` otherwise, you pass in your ```sandbox``` ```public key```
 
-Sample
+- Returns: ```Promise```
 
-```
-pay() {
-    if(this.info["valid"] == true) getpaidSetup(this.info["payload"])
-    else console.log(this.info["error"])
-}
-```
+**```preRender(validatedPaymentObject)```**
+You must preconnect to Rave to obtain a secure link that will enable you to load the payment UI. Prior to calling this method you must have called ```RavePayment.create()``` to validate your payment object.
 
+- Returns: ```Promise```
 
-## Deployment
-Here are a few things to note
-1. If you set ```production``` to ```false``` then ensure that you're using your rave sandbox api keys i.e public and secret key
-2. If you set ```production``` to ```true``` then ensure that you're using your rave live api keys i.e public and secret key
+**```render(paymentLink)```**
+Start the Rave UI to collect payment from user.
 
 
-### Support :
+### Rave Payment
 
-* For any bugs about this module, please feel free to report here.
-* And you are welcome to fork and submit pull requests.
+**```create(paymentObject)```**
+You must validate the paymentObject you want to use to load the Rave payment UI. See [https://developer.flutterwave.com/docs/rave-inline-1](https://developer.flutterwave.com/docs/rave-inline-1) for more documentation of the parameters.
+
+- Returns: ```Object``` (either an error or your validated payment object)
+
+**```amount()```**
+The amount of the payment
+
+**```email()```**
+The customer's email
+
+**```txref()```**
+The transaction reference of the payment
+
+**```currency()```**
+The currency of the payment
 
 
-## License
+# License
+<br/>
 
-This project is licensed under the MIT License 
+Released under [MIT License](https://github.com/Jake-parkers/rave-cordova-sdk/blob/master/License)
+
+
+# Contributions
+<br/>
+
+Pull requests and new issues are welcome. See [CONTRIBUTING.md](https://github.com/Jake-parkers/rave-cordova-sdk/blob/master/CONTRIBUTING.md) for details.

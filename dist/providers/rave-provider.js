@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Misc } from './misc-provider';
+import { RavePayment } from './rave-payment-provider';
 import { HttpClient } from '@angular/common/http';
-require('cordova-plugin-inappbrowser');
 var Rave = (function () {
-    function Rave(misc, http) {
+    function Rave(misc, ravePayment, http) {
         this.misc = misc;
+        this.ravePayment = ravePayment;
         this.http = http;
     }
     /**
@@ -50,15 +51,20 @@ var Rave = (function () {
          */
     function (paymentObject) {
         var _this = this;
+        paymentObject["PBFPubKey"] = this.misc.PBFPubKey;
+        var paymentObj = this.ravePayment.create(paymentObject);
         return new Promise(function (resolve, reject) {
-            paymentObject['PBFPubKey'] = _this.misc.PBFPubKey;
-            return _this.http.post('https://ravesandboxapi.flutterwave.com/flwv3-pug/getpaidx/api/v2/hosted/', paymentObject, { headers: { 'content-type': 'application/json' } })
-                .subscribe(function (response) {
-                if (response["status"] == "error")
-                    reject(response["message"]);
-                else
-                    resolve(response["data"]["link"]);
-            });
+            if (paymentObj["validated"]) {
+                return _this.http.post(_this.uri, paymentObj, { headers: { 'content-type': 'application/json' } })
+                    .subscribe(function (response) {
+                    if (response["status"] == "error")
+                        reject(response["message"]);
+                    else
+                        resolve(response["data"]["link"]);
+                });
+            }
+            else
+                reject(paymentObj);
         });
     };
     /**
@@ -83,6 +89,7 @@ var Rave = (function () {
     /** @nocollapse */
     Rave.ctorParameters = function () { return [
         { type: Misc, },
+        { type: RavePayment, },
         { type: HttpClient, },
     ]; };
     return Rave;

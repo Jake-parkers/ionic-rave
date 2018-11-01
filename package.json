@@ -1,6 +1,6 @@
 {
   "name": "ionic-ravey",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "An ionic module to help you integrate rave inline payment modal",
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
@@ -14,12 +14,23 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/Jake-parkers/ionic-rave.git"
   },
-  "keywords": [],
-  "author": "Flutterwave",
+  "keywords": [ 
+    "rave",
+    "rave-ionic",
+    "flutterwave",
+    "payments",
+    "payment",
+    "africa",
+    "ionic plugin",
+    "rave-ionic-sdk",
+    "rave-ionic3-sdk",
+    "accept payment"
+],
+  "author": "Joshua Kwaku Boateng",
   "license": "MIT",
-  "homepage": "https://rave.flutterwave.com",
+  "homepage": "https://github.com/Jake-parkers/ionic-rave/blob/master/readme.md",
   "devDependencies": {
     "@angular/common": "5.0.3",
     "@angular/compiler": "5.0.3",

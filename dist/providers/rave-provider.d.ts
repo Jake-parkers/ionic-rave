@@ -3,9 +3,10 @@ import { RavePayment } from './rave-payment-provider';
 import { HttpClient } from '@angular/common/http';
 export declare class Rave {
     misc: Misc;
+    ravePayment: RavePayment;
     private http;
     uri: string;
-    constructor(misc: Misc, http: HttpClient);
+    constructor(misc: Misc, ravePayment: RavePayment, http: HttpClient);
     /**
      *
      * @param production
