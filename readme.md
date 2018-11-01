@@ -96,10 +96,10 @@ The currency of the payment
 # License
 <br/>
 
-Released under [MIT License](https://github.com/Jake-parkers/rave-cordova-sdk/blob/master/License)
+Released under [MIT License](https://github.com/Jake-parkers/ionic-rave/blob/master/License)
 
 
 # Contributions
 <br/>
 
-Pull requests and new issues are welcome. See [CONTRIBUTING.md](https://github.com/Jake-parkers/rave-cordova-sdk/blob/master/CONTRIBUTING.md) for details.
+Pull requests and new issues are welcome. See [CONTRIBUTING.md](https://github.com/Jake-parkers/ionic-rave/blob/master/CONTRIBUTING.md) for details.
