@@ -1,5 +1,5 @@
 {
-  "name": "ionic-ravey",
+  "name": "rave-ionic-3",
   "version": "1.0.0",
   "description": "An ionic module to help you integrate rave inline payment modal",
   "main": "./dist/index.js",
