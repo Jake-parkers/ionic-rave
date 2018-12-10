@@ -13,7 +13,7 @@ The Rave Ionic 3 Module adds support for spinning up the Rave modal on IOS and A
 
 ```
 $ cd myapp
-$ npm install --save rave-ionic3-sdk
+$ npm install --save rave-ionic3
 ```
 4. [Add the module to your AppModule](https://ionicframework.com/docs/native/#Add_Plugins_to_Your_App_Module)
 5. See Usage
@@ -23,7 +23,7 @@ $ npm install --save rave-ionic3-sdk
 <br/>
 
 ```
-import { Rave, RavePayment } from 'rave-ionic3-sdk';
+import { Rave, RavePayment } from 'rave-ionic3';
 
 constructor(private rave: Rave, private ravePayment: RavePayment) { }
 
