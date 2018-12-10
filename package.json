@@ -1,6 +1,6 @@
 {
   "name": "rave-ionic3",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "An ionic module to help you integrate rave inline payment modal",
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
@@ -16,7 +16,7 @@
     "type": "git",
     "url": "https://github.com/Jake-parkers/ionic-rave.git"
   },
-  "keywords": [ 
+  "keywords": [
     "rave",
     "rave-ionic",
     "flutterwave",
@@ -27,7 +27,7 @@
     "rave-ionic-sdk",
     "rave-ionic3-sdk",
     "accept payment"
-],
+  ],
   "author": "Joshua Kwaku Boateng",
   "license": "MIT",
   "homepage": "https://github.com/Jake-parkers/ionic-rave/blob/master/readme.md",
