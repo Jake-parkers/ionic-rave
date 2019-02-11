@@ -89,7 +89,7 @@ Start the Rave UI to collect payment from user.
 
 Use the ```InAppBrowserObject``` returned to close the modal once the transaction completes by binding to the ```loadend``` event and checking for your redirect url as was shown above.
 
-**NOTE:** IOS users ```may``` still need to rely on the ```Done``` button at the bottom left of the opened webview.
+**NOTE: IOS users ```may``` still need to rely on the ```Done``` button at the bottom left of the opened.**
 
 ### Rave Payment
 
