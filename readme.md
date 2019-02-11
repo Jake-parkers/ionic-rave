@@ -14,6 +14,8 @@ The Rave Ionic 3 Module adds support for spinning up the Rave modal on IOS and A
 ```
 $ cd myapp
 $ npm install --save rave-ionic3
+$ ionic cordova plugin add cordova-plugin-inappbrowser
+$ npm install --save @ionic-native/in-app-browser
 ```
 4. [Add the module to your AppModule](https://ionicframework.com/docs/native/#Add_Plugins_to_Your_App_Module)
 5. See Usage
@@ -23,9 +25,15 @@ $ npm install --save rave-ionic3
 <br/>
 
 ```
-import { Rave, RavePayment } from 'rave-ionic3';
+import { Rave, RavePayment, Misc } from 'rave-ionic3';
+import { InAppBrowser, InAppBrowserEvent, InAppBrowserObject } from '@ionic-native/
 
-constructor(private rave: Rave, private ravePayment: RavePayment) { }
+constructor(
+  private rave: Rave, 
+  private ravePayment: RavePayment, 
+  private misc: Misc,
+  private iab: InAppBrowser,
+  ) { }
 
 ...
 
@@ -46,7 +54,11 @@ this.rave.init(PRODUCTION_FLAG, "YOUR_PUBLIC_KEY")
         this.rave.preRender(paymentObject)
           .then(secure_link => {
             secure_link = secure_link +" ";
-            this.rave.render(secure_link);
+            const browser: InAppBrowserObject = this.rave.render(secure_link, this.iab);
+            browser.on("loadstop")
+                .subscribe((event: InAppBrowserEvent) => {
+                  if(event.url.indexOf('https://your-redirect-url') != -1) browser.close();
+                })
           }).catch(error => {
             // Error or invalid paymentObject passed in
           })
@@ -72,6 +84,9 @@ You must preconnect to Rave to obtain a secure link that will enable you to load
 **```render(paymentLink)```**
 Start the Rave UI to collect payment from user.
 
+- Returns: ```InAppBrowserObject```
+
+Use the ```InAppBrowserObject``` returned to close the modal once the transaction completes by binding to the ```loadend`` event and checking for your redirect url as was shown above.
 
 ### Rave Payment
 

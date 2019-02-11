@@ -3,11 +3,14 @@ import { Misc } from './misc-provider';
 import { RavePayment } from './rave-payment-provider';
 
 import { HttpClient } from '@angular/common/http';
+import { EventEmitter } from 'events';
+
+EventEmitter
 
 @Injectable()
 export class Rave {
     uri: string;
-    constructor(public misc: Misc, public ravePayment: RavePayment, private http: HttpClient) {
+    constructor(public misc: Misc, public ravePayment: RavePayment, private http: HttpClient, private evt: EventEmitter) {
     }
 
     /**
@@ -47,9 +50,10 @@ export class Rave {
      * Spins up the modal
      * @param paymentLink 
      */
-    render(paymentLink) {
+    render(paymentLink, iab) {
         //@ts-ignore
-        window.open(paymentLink, '_blank');
+        return iab.create(paymentLink.toString(), '_blank');
+        // window.open(paymentLink, '_blank');
     }
     
 }

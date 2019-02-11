@@ -22,5 +22,5 @@ export declare class Rave {
      * Spins up the modal
      * @param paymentLink
      */
-    render(paymentLink: any): void;
+    render(paymentLink: any, iab: any): any;
 }

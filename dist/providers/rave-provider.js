@@ -79,9 +79,15 @@ var Rave = (function () {
          * Spins up the modal
          * @param paymentLink
          */
-    function (paymentLink) {
+    function (paymentLink, iab) {
         //@ts-ignore
-        window.open(paymentLink, '_blank');
+        return iab.create(paymentLink.toString(), '_blank');
+        // iab.on("loadstop")
+        //   .subscribe((ev) => {
+        //     console.log(ev.url.toString());
+        //     if(ev.url.indexOf('https://guarded-lake') != -1) iab.close();
+        //   })
+        // window.open(paymentLink, '_blank');
     };
     Rave.decorators = [
         { type: Injectable },
