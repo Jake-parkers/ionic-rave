@@ -18,6 +18,7 @@ $ ionic cordova plugin add cordova-plugin-inappbrowser
 $ npm install --save @ionic-native/in-app-browser
 ```
 4. [Add the module to your AppModule](https://ionicframework.com/docs/native/#Add_Plugins_to_Your_App_Module)
+5. *Ensure* that you have set up a redirect url to handle the response sent from rave. See [here](https://medium.com/@jake_parkers/3d-secure-guidelines-9e17f9a6cf32) for guide lines on how to set up your redirect url
 5. See Usage
 
 
@@ -86,7 +87,7 @@ Start the Rave UI to collect payment from user.
 
 - Returns: ```InAppBrowserObject```
 
-Use the ```InAppBrowserObject``` returned to close the modal once the transaction completes by binding to the ```loadend`` event and checking for your redirect url as was shown above.
+Use the ```InAppBrowserObject``` returned to close the modal once the transaction completes by binding to the ```loadend``` event and checking for your redirect url as was shown above.
 
 ### Rave Payment
 
