@@ -58,7 +58,20 @@ this.rave.init(PRODUCTION_FLAG, "YOUR_PUBLIC_KEY")
             const browser: InAppBrowserObject = this.rave.render(secure_link, this.iab);
             browser.on("loadstop")
                 .subscribe((event: InAppBrowserEvent) => {
-                  if(event.url.indexOf('https://your-redirect-url') != -1) browser.close();
+                  if(event.url.indexOf('https://your-redirect-url') != -1) {
+                    if(this.rave.paymentStatus(url) == 'failed') {
+                      this.alertCtrl.create({
+                        title: "Message",
+                        message: "Oops! Transaction failed"
+                      }).present();
+                    }else {
+                      this.alertCtrl.create({
+                        title: "Message",
+                        message: "Transaction successful"
+                      }).present();
+                    }
+                    browser.close()
+                  }
                 })
           }).catch(error => {
             // Error or invalid paymentObject passed in
@@ -88,6 +101,17 @@ Start the Rave UI to collect payment from user.
 - Returns: ```InAppBrowserObject```
 
 Use the ```InAppBrowserObject``` returned to close the modal once the transaction completes by binding to the ```loadend``` event and checking for your redirect url as was shown above.
+
+**```paymentStatus(url)```**
+Get's the status of the transaction and returns it as a string. The status could either be ```success``` or ````failed```.
+
+Parameter(s)
+
+- url: this is the url gotten from the inappbroswer event ```event.url```
+
+- Returns: ```String```
+
+You should use the returned status to determine whether or not you shoud show a success or error message to your users.
 
 **NOTE: IOS users ```may``` still need to rely on the ```Done``` button at the bottom left of the opened.**
 
