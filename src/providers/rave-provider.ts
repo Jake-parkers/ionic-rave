@@ -3,14 +3,11 @@ import { Misc } from './misc-provider';
 import { RavePayment } from './rave-payment-provider';
 
 import { HttpClient } from '@angular/common/http';
-import { EventEmitter } from 'events';
-
-EventEmitter
 
 @Injectable()
 export class Rave {
     uri: string;
-    constructor(public misc: Misc, public ravePayment: RavePayment, private http: HttpClient, private evt: EventEmitter) {
+    constructor(public misc: Misc, public ravePayment: RavePayment, private http: HttpClient) {
     }
 
     /**
@@ -53,7 +50,13 @@ export class Rave {
     render(paymentLink, iab) {
         //@ts-ignore
         return iab.create(paymentLink.toString(), '_blank');
-        // window.open(paymentLink, '_blank');
+    }
+
+    paymentStatus(url) {
+        var response = decodeURIComponent(url);
+        response = response.slice(response.indexOf("=") + 1, response.length)
+        response = JSON.parse(response);
+        return response["status"]
     }
     
 }

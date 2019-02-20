@@ -82,12 +82,12 @@ var Rave = (function () {
     function (paymentLink, iab) {
         //@ts-ignore
         return iab.create(paymentLink.toString(), '_blank');
-        // iab.on("loadstop")
-        //   .subscribe((ev) => {
-        //     console.log(ev.url.toString());
-        //     if(ev.url.indexOf('https://guarded-lake') != -1) iab.close();
-        //   })
-        // window.open(paymentLink, '_blank');
+    };
+    Rave.prototype.paymentStatus = function (url) {
+        var response = decodeURIComponent(url);
+        response = response.slice(response.indexOf("=") + 1, response.length);
+        response = JSON.parse(response);
+        return response["status"];
     };
     Rave.decorators = [
         { type: Injectable },

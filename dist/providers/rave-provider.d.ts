@@ -23,4 +23,5 @@ export declare class Rave {
      * @param paymentLink
      */
     render(paymentLink: any, iab: any): any;
+    paymentStatus(url: any): any;
 }
