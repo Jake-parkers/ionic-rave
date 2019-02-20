@@ -1,6 +1,6 @@
 {
   "name": "rave-ionic3",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "An ionic module to help you integrate rave inline payment modal",
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
