@@ -5,7 +5,7 @@
 ## Installation
 <br/>
 
-The Rave Ionic 3 Module adds support for spinning up the Rave modal on IOS and Android. It uses the Rave Standard endpoint and has done all the hard work for you. All you need to is add the necessary file and call the appropriate functions.
+The Rave Ionic 3 Module adds support for spinning up the Rave modal on IOS and Android. It uses the Rave Standard endpoint and has done all the hard work for you. All you need is to add the necessary file and call the appropriate functions.
 
 1. Follow the official [Rave](https://www.flutterwave.com) documentation on how to create an account if you don't have one yet.
 2. Create a dummy project. For example ```ionic start myapp blank```
@@ -18,7 +18,7 @@ $ ionic cordova plugin add cordova-plugin-inappbrowser
 $ npm install --save @ionic-native/in-app-browser
 ```
 4. [Add the module to your AppModule](https://ionicframework.com/docs/native/#Add_Plugins_to_Your_App_Module)
-5. **Ensure** that you have set up a redirect url to handle the response sent from rave. See [here](https://medium.com/@jake_parkers/3d-secure-guidelines-9e17f9a6cf32) for guide lines on how to set up your redirect url
+5. **Ensure** that you have set up a redirect url to handle the response sent from rave. See [here](https://medium.com/@jake_parkers/3d-secure-guidelines-9e17f9a6cf32) for guidelines on how to set up your redirect url
 5. See Usage
 
 
@@ -100,7 +100,7 @@ Start the Rave UI to collect payment from user.
 
 - Returns: ```InAppBrowserObject```
 
-Use the ```InAppBrowserObject``` returned to close the modal once the transaction completes by binding to the ```loadend``` event and checking for your redirect url as was shown above.
+Use the ```InAppBrowserObject``` returned to close the modal once the transaction completes by binding to the ```loaded``` event and checking for your redirect url as was shown above.
 
 **```paymentStatus(url)```**
 Get's the status of the transaction and returns it as a string. The status could either be ```success``` or ````failed```.
@@ -111,7 +111,7 @@ Parameter(s)
 
 - Returns: ```String```
 
-You should use the returned status to determine whether or not you shoud show a success or error message to your users.
+You should use the returned status to determine whether or not you should show a success or error message to your users.
 
 **NOTE: IOS users ```may``` still need to rely on the ```Done``` button at the bottom left of the opened.**
 
